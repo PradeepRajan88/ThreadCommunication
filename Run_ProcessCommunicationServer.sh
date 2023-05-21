@@ -1,0 +1,1 @@
+java -cp ./target/ThreadCommunication-1.0.jar process.ProcessCommunicationServer $1 $2 $3 $4

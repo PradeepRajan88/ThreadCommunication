@@ -1,0 +1,1 @@
+java -cp .\target\ThreadCommunication-1.0.jar thread.ThreadCommunication %1 %2 %3
