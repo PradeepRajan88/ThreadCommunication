@@ -88,4 +88,5 @@ Use 'Run_ThreadCommunication.sh' with arguments as given below, or execute the f
      *   args[1] -> verbose (boolean, whether the players should log their actions to the console)
      *   args[2] -> port (int, port number to use)
 	 *   If args are not supplied, defaults will be used.
-
+  
+PS: The .bat versions of these scripts are also there for Windows OS but '.bat' files are often not allowed in code packages so they as renamed to '.notbat'
