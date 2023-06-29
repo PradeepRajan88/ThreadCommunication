@@ -89,6 +89,3 @@ Use 'Run_ThreadCommunication.sh' with arguments as given below, or execute the f
      *   args[2] -> port (int, port number to use)
 	 *   If args are not supplied, defaults will be used.
 
-
-**PS - The .bat versions of these scripts are also there for Windows OS but Gmail won't let me attach zip files containing .bat files so they as renamed to '.notbat'
-
