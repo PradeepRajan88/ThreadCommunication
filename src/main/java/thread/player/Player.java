@@ -8,26 +8,52 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Player implements Runnable {
 
-    /** name that will be printed to console */
+    /**
+     * name that will be printed to console
+     */
     private final String name;
-
-    /** holds the number of messaged received at any point. update everytime a message is received */
+    /**
+     * stop condition is the number of messages that each player should send as well as receive before stopping
+     */
+    private final int stopCondition;
+    /**
+     * messages to this player will be put in this queue and can be read by this player
+     */
+    private final BlockingQueue<String> inbox;
+    /**
+     * messages from this player will be put in this queue to be read by the other player
+     */
+    private final BlockingQueue<String> outbox;
+    /**
+     * if true, player will log to the console each message received or sent, as well as stopping
+     */
+    private final boolean verboseLogging;
+    /**
+     * holds the number of messaged received at any point. update everytime a message is received
+     */
     private int receivedMessagesCount;
-
-    /** holds the number of messaged sent at any point. update everytime a message is sent */
+    /**
+     * holds the number of messaged sent at any point. update everytime a message is sent
+     */
     private int sentMessagesCount;
 
-    /** stop condition is the number of messages that each player should send as well as receive before stopping */
-    private final int stopCondition;
-
-    /** messages to this player will be put in this queue and can be read by this player */
-    private BlockingQueue<String> inbox;
-
-    /** messages from this player will be put in this queue to be read by the other player*/
-    private BlockingQueue<String> outbox;
-
-    /** if true, player will log to the console each message received or sent, as well as stopping */
-    private boolean verbose;
+    /**
+     * Class constructor
+     *
+     * @param name
+     * @param inbox
+     * @param outbox
+     * @param stopCondition
+     * @param verboseLogging
+     */
+    public Player(String name, BlockingQueue<String> inbox, BlockingQueue<String> outbox,
+                  int stopCondition, boolean verboseLogging) {
+        this.name = name;
+        this.inbox = inbox;
+        this.outbox = outbox;
+        this.stopCondition = stopCondition;
+        this.verboseLogging = verboseLogging;
+    }
 
     /**
      * Executes continuously until stop condition is met.
@@ -49,23 +75,6 @@ public class Player implements Runnable {
             e.printStackTrace();
         }
         log("stopped", null);
-    }
-
-    /**
-     * Class constructor
-     * @param name
-     * @param inbox
-     * @param outbox
-     * @param stopCondition
-     * @param verbose
-     */
-    public Player(String name, BlockingQueue<String> inbox, BlockingQueue<String> outbox,
-                  int stopCondition, boolean verbose) {
-        this.name = name;
-        this.inbox = inbox;
-        this.outbox = outbox;
-        this.stopCondition = stopCondition;
-        this.verbose = verbose;
     }
 
     /**
@@ -94,16 +103,15 @@ public class Player implements Runnable {
 
         if (message != null && !message.isEmpty()) {
             message = message + " " + receivedMessagesCount;
+            log("sending message: " + message, null);
             outbox.put(message);
             sentMessagesCount++;
-            log("sent message: " + message, null);
         } else {
             log("has no message to send, skip sending", null);
         }
     }
 
     /**
-     *
      * @return receivedMessagesCount
      */
     public int getReceivedMessagesCount() {
@@ -111,7 +119,6 @@ public class Player implements Runnable {
     }
 
     /**
-     *
      * @return sentMessagesCount
      */
     public int getSentMessagesCount() {
@@ -119,7 +126,6 @@ public class Player implements Runnable {
     }
 
     /**
-     *
      * Prints statistics (counts) to the console
      */
     public void printStats() {
@@ -127,11 +133,10 @@ public class Player implements Runnable {
     }
 
     /**
-     *
-     * Prints the supplied string with prefix and name to the console if verbose flag is true.
+     * Prints the supplied string with prefix and name to the console if verboseLogging flag is true.
      */
     public void log(String string, String prefix) {
-        if (verbose) {
+        if (verboseLogging) {
             System.out.println((prefix == null ? "" : prefix) + name + ": " + string);
         }
     }

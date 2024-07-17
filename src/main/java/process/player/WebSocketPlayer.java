@@ -1,6 +1,9 @@
 package process.player;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.Socket;
 
 /**
@@ -10,45 +13,57 @@ import java.net.Socket;
  */
 public class WebSocketPlayer {
 
-    /** name that will be printed to console */
-    protected String name;
-
-    /** holds the number of messaged received at any point. update everytime a message is received */
-    protected int receivedMessagesCount;
-
-    /** holds the number of messaged sent at any point. update everytime a message is sent */
-    protected int sentMessagesCount;
-
-    /** if true, player will log to the console each message received or sent, as well as stopping */
-    protected boolean verbose;
-
-    /** stop condition is the number of messages that each player should send as well as receive before stopping */
+    /**
+     * stop condition is the number of messages that each player should send as well as receive before stopping
+     */
     protected final int stopCondition;
-
-    /** port number used by the socket/ServerSocket */
+    /**
+     * port number used by the socket/ServerSocket
+     */
     protected final int port;
-
-    /** socket instance */
+    /**
+     * name that will be printed to console
+     */
+    protected String name;
+    /**
+     * holds the number of messaged received at any point. update everytime a message is received
+     */
+    protected int receivedMessagesCount;
+    /**
+     * holds the number of messaged sent at any point. update everytime a message is sent
+     */
+    protected int sentMessagesCount;
+    /**
+     * if true, player will log to the console each message received or sent, as well as stopping
+     */
+    protected boolean verboseLogging;
+    /**
+     * socket instance
+     */
     protected Socket socket;
 
-    /** PrintStream instance to send data */
+    /**
+     * PrintStream instance to send data
+     */
     PrintStream ps;
 
-    /** BufferedReader instance to read data */
+    /**
+     * BufferedReader instance to read data
+     */
     BufferedReader br;
 
     /**
-     *  Class constructor
+     * Class constructor
      *
      * @param name
      * @param stopCondition
-     * @param verbose
+     * @param verboseLogging
      * @param port
      */
-    public WebSocketPlayer(String name, int stopCondition, boolean verbose, int port) {
+    public WebSocketPlayer(String name, int stopCondition, boolean verboseLogging, int port) {
         this.name = name;
         this.stopCondition = stopCondition;
-        this.verbose = verbose;
+        this.verboseLogging = verboseLogging;
         this.port = port;
     }
 
@@ -63,7 +78,7 @@ public class WebSocketPlayer {
             while (receivedMessagesCount < stopCondition) {
                 String message = br.readLine();
                 receivedMessagesCount++;
-                log("read message: " + message,"\t");
+                log("read message: " + message, "\t");
                 if (sentMessagesCount < stopCondition) {
                     message = message + " " + receivedMessagesCount;
                     ps.println(message);
@@ -94,7 +109,7 @@ public class WebSocketPlayer {
     }
 
     /**
-     *  instantiate the Socket, PrintStream and BufferedReader
+     * instantiate the Socket, PrintStream and BufferedReader
      *
      * @throws IOException
      */
@@ -105,8 +120,8 @@ public class WebSocketPlayer {
     }
 
     /**
-     *
      * close the Socket, PrintStream and BufferedReader
+     *
      * @throws IOException
      */
     protected void closeSocketIO() throws IOException {
@@ -124,7 +139,6 @@ public class WebSocketPlayer {
     }
 
     /**
-     *
      * Prints statistics (counts) to the console
      */
     public void printStats() {
@@ -132,11 +146,10 @@ public class WebSocketPlayer {
     }
 
     /**
-     *
-     * Prints the supplied string with prefix and name to the console if verbose flag is true.
+     * Prints the supplied string with prefix and name to the console if verboseLogging flag is true.
      */
     public void log(String string, String prefix) {
-        if (verbose) {
+        if (verboseLogging) {
             System.out.println((prefix == null ? "" : prefix) + name + ": " + string);
         }
     }

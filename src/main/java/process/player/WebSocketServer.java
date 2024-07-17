@@ -1,21 +1,29 @@
 package process.player;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 
 /**
  * Each instance of this class represents an Initiator (Server) player.
  * Extends the behaviour of WebSocketPlayer class with the ability to initiate messaging with the given initial message,
  * as well as to creates a server socket, bound to the specified port.
+ *
  * @see WebSocketServer
  */
 public class WebSocketServer extends WebSocketPlayer {
 
-    /** the very first message */
+    /**
+     * the very first message
+     */
     private final String initialMessage;
 
-    /** ServerSocket instance */
+    /**
+     * ServerSocket instance
+     */
     private ServerSocket serverSocket;
 
     /**
@@ -23,12 +31,12 @@ public class WebSocketServer extends WebSocketPlayer {
      *
      * @param name
      * @param stopCondition
-     * @param verbose
+     * @param verboseLogging
      * @param port
      * @param initialMessage
      */
-    public WebSocketServer(String name, int stopCondition, boolean verbose, int port, String initialMessage) {
-        super(name, stopCondition, verbose, port);
+    public WebSocketServer(String name, int stopCondition, boolean verboseLogging, int port, String initialMessage) {
+        super(name, stopCondition, verboseLogging, port);
         this.initialMessage = initialMessage;
     }
 
@@ -40,12 +48,12 @@ public class WebSocketServer extends WebSocketPlayer {
         String message = initialMessage + " " + receivedMessagesCount;
         ps.println(message);
         sentMessagesCount++;
-        log("sent message: " + message,null);
+        log("sent message: " + message, null);
     }
 
     /**
-     *
      * instantiate the ServerSocket, Socket, PrintStream and BufferedReader
+     *
      * @throws IOException
      */
     @Override
@@ -58,8 +66,8 @@ public class WebSocketServer extends WebSocketPlayer {
     }
 
     /**
-     *
      * close the ServerSocket, Socket, PrintStream and BufferedReader
+     *
      * @throws IOException
      */
     @Override

@@ -1,22 +1,24 @@
 package thread;
 
+import common.Configuration;
+import common.Stats;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ThreadCommunicationTest {
 
+    int stopCondition = Integer.parseInt(Configuration.DEFAULT_STOP_CONDITION);
+
     @Test
     public void testThreadCommunication() {
 
-        int stopCondition = 20;
-        int[] stats = ThreadCommunication.validateAndPlay(stopCondition, "Test", false);
+        Stats stats = ThreadCommunication.play(stopCondition, "Test", true);
 
         Assertions.assertNotNull(stats);
-        Assertions.assertEquals(4, stats.length);
-        Assertions.assertEquals(stopCondition, stats[0]);
-        Assertions.assertEquals(stopCondition, stats[1]);
-        Assertions.assertEquals(stopCondition, stats[2]);
-        Assertions.assertEquals(stopCondition, stats[3]);
+        Assertions.assertEquals(stopCondition, stats.getInitiatorSentMessagesCount());
+        Assertions.assertEquals(stopCondition, stats.getInitiatorReceivedMessagesCount());
+        Assertions.assertEquals(stopCondition, stats.getPlayerSentMessagesCount());
+        Assertions.assertEquals(stopCondition, stats.getPlayerReceivedMessagesCount());
     }
 
 }

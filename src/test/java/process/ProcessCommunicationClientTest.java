@@ -1,6 +1,7 @@
 package process;
 
 import common.Configuration;
+import common.Stats;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +16,10 @@ public class ProcessCommunicationClientTest {
     @Test
     public void testProcessCommunicationClient() {
 
-        int[] stats = ProcessCommunicationClient.validateAndPlay(stopCondition, false, port);
-
+        Stats stats = ProcessCommunicationClient.play(stopCondition, true, port);
         Assertions.assertNotNull(stats);
-        Assertions.assertEquals(2, stats.length);
-        Assertions.assertEquals(stopCondition, stats[0]);
-        Assertions.assertEquals(stopCondition, stats[1]);
+        Assertions.assertEquals(stopCondition, stats.getPlayerSentMessagesCount());
+        Assertions.assertEquals(stopCondition, stats.getPlayerReceivedMessagesCount());
     }
 
 }

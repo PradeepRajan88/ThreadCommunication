@@ -5,24 +5,24 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *  This class holds all the constants and defaults used in the project. Can be used to read from the property file
- *  or from the default properties.
+ * This class holds all the constants and defaults used in the project. Can be used to read from the property file
+ * or from the default properties.
  */
 public class Configuration {
 
     public static final String KEY_INITIAL_MESSAGE = "message.initial";
     public static final String KEY_STOP_CONDITION = "stop.condition";
-    public static final String KEY_VERBOSE = "log.verbose";
+    public static final String KEY_VERBOSE_LOGGING = "log.verbose";
     public static final String KEY_PORT_NUMBER = "websocket.port";
 
     public static final String KEY_STOP_CONDITION_MAX = "stop.condition.max";
     public static final String KEY_INITIAL_MESSAGE_MAX = "message.initial.max";
 
     public static final String DEFAULT_INITIAL_MESSAGE = "Hi";
-    public static final String DEFAULT_STOP_CONDITION = "20";
+    public static final String DEFAULT_STOP_CONDITION = "10";
     public static final String DEFAULT_STOP_CONDITION_MAX = "1000";
     public static final String DEFAULT_INITIAL_MESSAGE_MAX = "1000";
-    public static final String DEFAULT_VERBOSE = "true";
+    public static final String DEFAULT_verboseLogging = "true";
     public static final String DEFAULT_PORT_NUMBER = "81";
 
     private static final String CONFIG_FILE_PATH = "config.properties";
@@ -54,6 +54,7 @@ public class Configuration {
     /**
      * supplies default properties that will be used if the property file is not available or if the specified key is not present in the property file.
      * Can also be directly used to bypass property file.
+     *
      * @return default properties
      */
     public static Properties getDefaults() {
@@ -62,7 +63,7 @@ public class Configuration {
         defaultProp.setProperty(KEY_STOP_CONDITION, DEFAULT_STOP_CONDITION);
         defaultProp.setProperty(KEY_STOP_CONDITION_MAX, DEFAULT_STOP_CONDITION_MAX);
         defaultProp.setProperty(KEY_INITIAL_MESSAGE_MAX, DEFAULT_INITIAL_MESSAGE_MAX);
-        defaultProp.setProperty(KEY_VERBOSE, DEFAULT_VERBOSE);
+        defaultProp.setProperty(KEY_VERBOSE_LOGGING, DEFAULT_verboseLogging);
         defaultProp.setProperty(KEY_PORT_NUMBER, DEFAULT_PORT_NUMBER);
         return defaultProp;
     }
