@@ -24,9 +24,6 @@ public class ThreadCommunication {
         boolean verboseLogging = ArgsReader.readVerboseLogging(args, 1);
         String initialMessage = ArgsReader.readInitialMessage(args, 2);
 
-        System.out.println("running ThreadCommunication with stopCondition: " + stopCondition + ", initialMessage: "
-                + initialMessage + ", verboseLogging: " + verboseLogging);
-
         play(stopCondition, initialMessage, verboseLogging);
     }
 
@@ -37,6 +34,9 @@ public class ThreadCommunication {
      * @return statistics (number of messages received and sent) as a fixed size int array.
      */
     public static Stats play(final int stopCondition, String initialMessage, boolean verboseLogging) {
+
+        System.out.println("running ThreadCommunication with stopCondition: " + stopCondition + ", initialMessage: "
+                + initialMessage + ", verboseLogging: " + verboseLogging);
 
         // Using SynchronousQueue implementation of BlockingQueue
         BlockingQueue<String> mailBox1 = new SynchronousQueue<>();

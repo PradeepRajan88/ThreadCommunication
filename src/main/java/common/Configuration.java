@@ -23,11 +23,11 @@ public class Configuration {
     public static final String DEFAULT_STOP_CONDITION_MAX = "1000";
     public static final String DEFAULT_INITIAL_MESSAGE_MAX = "1000";
     public static final String DEFAULT_verboseLogging = "true";
-    public static final String DEFAULT_PORT_NUMBER = "81";
+    public static final String DEFAULT_PORT_NUMBER = "1101";
 
     private static final String CONFIG_FILE_PATH = "config.properties";
 
-    private static final Properties prop = new Properties(getDefaults());
+    private static final Properties defaultProps = new Properties(getDefaults());
 
     /**
      * Returns the value of the specified key from the property file, or failing that, from the defaults.
@@ -40,15 +40,15 @@ public class Configuration {
     public static String read(String key) {
         try (InputStream input = Configuration.class.getClassLoader().getResourceAsStream(CONFIG_FILE_PATH)) {
             if (input == null) {
-                System.err.println("config.properties not found.");
+                System.out.println("config.properties not found.");
             } else {
-                prop.load(input);
+                defaultProps.load(input);
             }
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return prop.getProperty(key);
+        return defaultProps.getProperty(key);
     }
 
     /**

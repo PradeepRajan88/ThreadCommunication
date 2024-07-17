@@ -28,14 +28,14 @@ public class ProcessCommunicationServer {
         boolean verboseLogging = ArgsReader.readVerboseLogging(args, 1);
         int port = ArgsReader.readPort(args, 2);
         String initialMessage = ArgsReader.readInitialMessage(args, 3);
-        System.out.println("running ServerPlayer with stopCondition: " + stopCondition + ", verboseLogging: " + verboseLogging + ", port: " + port + ", initialMessage: " + initialMessage);
 
         play(stopCondition, verboseLogging, port, initialMessage);
     }
 
     public static Stats play(int stopCondition, boolean verboseLogging, int port, String initialMessage) {
 
-        WebSocketServer initiator = new WebSocketServer("WebSocketServer", stopCondition, verboseLogging, port, initialMessage);
+        System.out.println("running WebSocketInitiator with stopCondition: " + stopCondition + ", verboseLogging: " + verboseLogging + ", port: " + port + ", initialMessage: " + initialMessage);
+        WebSocketServer initiator = new WebSocketServer("WebSocketInitiator", stopCondition, verboseLogging, port, initialMessage);
         initiator.play();
         initiator.printStats();
 

@@ -72,10 +72,18 @@ public class WebSocketServer extends WebSocketPlayer {
      */
     @Override
     protected void closeSocketIO() throws IOException {
-        ps.close();
-        br.close();
-        socket.close();
-        serverSocket.close();
+        if(ps !=null){
+            ps.close();
+        }
+        if(br !=null){
+            br.close();
+        }
+        if(socket !=null){
+            socket.close();
+        }
+        if(serverSocket !=null){
+            serverSocket.close();
+        }
     }
 
 }

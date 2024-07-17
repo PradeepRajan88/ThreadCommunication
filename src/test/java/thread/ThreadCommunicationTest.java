@@ -2,8 +2,7 @@ package thread;
 
 import common.Configuration;
 import common.Stats;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class ThreadCommunicationTest {
 

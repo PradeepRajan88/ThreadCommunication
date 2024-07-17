@@ -26,14 +26,14 @@ public class ProcessCommunicationClient {
         int stopCondition = ArgsReader.readStopCondition(args, 0);
         boolean verboseLogging = ArgsReader.readVerboseLogging(args, 1);
         int port = ArgsReader.readPort(args, 2);
-        System.out.println("running ClientPlayer with stopCondition: " + stopCondition + ", verboseLogging: " + verboseLogging + ", port: " + port);
 
         play(stopCondition, verboseLogging, port);
     }
 
     public static Stats play(final int stopCondition, boolean verboseLogging, int port) {
 
-        WebSocketPlayer player = new WebSocketPlayer("WebSocketClient", stopCondition, verboseLogging, port);
+        System.out.println("running WebSocketPlayer with stopCondition: " + stopCondition + ", verboseLogging: " + verboseLogging + ", port: " + port);
+        WebSocketPlayer player = new WebSocketPlayer("WebSocketPlayer", stopCondition, verboseLogging, port);
         player.play();
         player.printStats();
 

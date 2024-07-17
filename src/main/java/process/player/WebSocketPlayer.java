@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -114,7 +115,16 @@ public class WebSocketPlayer {
      * @throws IOException
      */
     protected void initSocketIO() throws IOException {
-        socket = new Socket("localhost", port);
+        int retryCount = 0;
+        while (retryCount < 30) {
+            try {
+                socket = new Socket("localhost", port);
+                break;
+            } catch (ConnectException conEx) {
+                System.out.println("Failed to connect to server. Retrying...");
+                retryCount++;
+            }
+        }
         ps = new PrintStream(socket.getOutputStream());
         br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
@@ -125,9 +135,16 @@ public class WebSocketPlayer {
      * @throws IOException
      */
     protected void closeSocketIO() throws IOException {
-        ps.close();
-        br.close();
-        socket.close();
+
+        if (ps != null) {
+            ps.close();
+        }
+        if (br != null) {
+            br.close();
+        }
+        if (socket != null) {
+            socket.close();
+        }
     }
 
     public int getReceivedMessagesCount() {
