@@ -29,11 +29,11 @@ public class WebSocketServer extends WebSocketPlayer {
     /**
      * Class constructor
      *
-     * @param name
-     * @param stopCondition
-     * @param verboseLogging
-     * @param port
-     * @param initialMessage
+     * @param name name of this player that appears in logs.
+     * @param stopCondition play stop condition
+     * @param verboseLogging flag whether the players should log their actions to the console.
+     * @param port port that websocket should use.
+     * @param initialMessage initial message that initiator sends to start play.
      */
     public WebSocketServer(String name, int stopCondition, boolean verboseLogging, int port, String initialMessage) {
         super(name, stopCondition, verboseLogging, port);
@@ -54,7 +54,7 @@ public class WebSocketServer extends WebSocketPlayer {
     /**
      * instantiate the ServerSocket, Socket, PrintStream and BufferedReader
      *
-     * @throws IOException
+     * @throws IOException exception.
      */
     @Override
     protected void initSocketIO() throws IOException {
@@ -68,20 +68,20 @@ public class WebSocketServer extends WebSocketPlayer {
     /**
      * close the ServerSocket, Socket, PrintStream and BufferedReader
      *
-     * @throws IOException
+     * @throws IOException exception.
      */
     @Override
     protected void closeSocketIO() throws IOException {
-        if(ps !=null){
+        if (ps != null) {
             ps.close();
         }
-        if(br !=null){
+        if (br != null) {
             br.close();
         }
-        if(socket !=null){
+        if (socket != null) {
             socket.close();
         }
-        if(serverSocket !=null){
+        if (serverSocket != null) {
             serverSocket.close();
         }
     }

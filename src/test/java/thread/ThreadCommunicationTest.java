@@ -2,11 +2,12 @@ package thread;
 
 import common.Configuration;
 import common.Stats;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ThreadCommunicationTest {
 
-    int stopCondition = Integer.parseInt(Configuration.DEFAULT_STOP_CONDITION);
+    final int stopCondition = Integer.parseInt(Configuration.DEFAULT_STOP_CONDITION);
 
     @Test
     public void testThreadCommunication() {

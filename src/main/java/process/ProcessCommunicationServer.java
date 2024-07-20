@@ -18,7 +18,7 @@ public class ProcessCommunicationServer {
      *
      * @param args if args are not supplied, defaults will be used.
      *             args[0] -> stopCondition (int, number of messages that each player should send as well as receive)
-     *             args[1] -> verboseLogging (boolean, whether the players should log their actions to the console)
+     *             args[1] -> verboseLogging (boolean, whether the players should log their actions.)
      *             args[2] -> initialMessage (String, the very first message that the Server will send)
      *             args[3] -> port (int, port number to use)
      */

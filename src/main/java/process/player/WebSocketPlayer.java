@@ -25,7 +25,7 @@ public class WebSocketPlayer {
     /**
      * name that will be printed to console
      */
-    protected String name;
+    protected final String name;
     /**
      * holds the number of messaged received at any point. update everytime a message is received
      */
@@ -37,7 +37,7 @@ public class WebSocketPlayer {
     /**
      * if true, player will log to the console each message received or sent, as well as stopping
      */
-    protected boolean verboseLogging;
+    protected final boolean verboseLogging;
     /**
      * socket instance
      */
@@ -56,10 +56,10 @@ public class WebSocketPlayer {
     /**
      * Class constructor
      *
-     * @param name
-     * @param stopCondition
-     * @param verboseLogging
-     * @param port
+     * @param name name of this player that appears in logs.
+     * @param stopCondition number of messages to send and receive before play stops.
+     * @param verboseLogging flag whether the players should log their actions to the console.
+     * @param port port that websocket should use.
      */
     public WebSocketPlayer(String name, int stopCondition, boolean verboseLogging, int port) {
         this.name = name;
@@ -112,7 +112,7 @@ public class WebSocketPlayer {
     /**
      * instantiate the Socket, PrintStream and BufferedReader
      *
-     * @throws IOException
+     * @throws IOException exception.
      */
     protected void initSocketIO() throws IOException {
         int retryCount = 0;
@@ -132,7 +132,7 @@ public class WebSocketPlayer {
     /**
      * close the Socket, PrintStream and BufferedReader
      *
-     * @throws IOException
+     * @throws IOException exception.
      */
     protected void closeSocketIO() throws IOException {
 

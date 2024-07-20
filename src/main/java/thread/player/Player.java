@@ -40,11 +40,11 @@ public class Player implements Runnable {
     /**
      * Class constructor
      *
-     * @param name
-     * @param inbox
-     * @param outbox
-     * @param stopCondition
-     * @param verboseLogging
+     * @param name name of this player that appears in logs.
+     * @param inbox the queue holding incoming messages. This is also the outbox of the other player.
+     * @param outbox the queue holding outgoing messages. This is also the inbox of the other player.
+     * @param stopCondition number of messages to send and receive before play stops.
+     * @param verboseLogging flag whether the players should log their actions to the console.
      */
     public Player(String name, BlockingQueue<String> inbox, BlockingQueue<String> outbox,
                   int stopCondition, boolean verboseLogging) {
@@ -82,7 +82,7 @@ public class Player implements Runnable {
      * receivedMessagesCount and returns the message.
      *
      * @return message
-     * @throws InterruptedException
+     * @throws InterruptedException exception
      */
     public synchronized String readMessage() throws InterruptedException {
 
@@ -96,8 +96,8 @@ public class Player implements Runnable {
      * Inserts the specified message into the outbox, waiting if necessary for space to become available,
      * and increments sentMessagesCount. Does not insert if message is null or empty.
      *
-     * @param message
-     * @throws InterruptedException
+     * @param message message to send.
+     * @throws InterruptedException exception.
      */
     public synchronized void sendMessage(String message) throws InterruptedException {
 
