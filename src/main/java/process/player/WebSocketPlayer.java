@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Each instance of this class represents a player that can communicate with another instance of this class
@@ -88,7 +92,7 @@ public class WebSocketPlayer {
                 } // else Do nothing. Initiator does not have to send a reply to the last message they receive.
 
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -114,16 +118,41 @@ public class WebSocketPlayer {
      *
      * @throws IOException exception.
      */
-    protected void initSocketIO() throws IOException {
-        int retryCount = 0;
-        while (retryCount < 30) {
+    protected void initSocketIO() throws IOException, InterruptedException {
+
+        final int retryDelay = 200; // Delay between retries in milliseconds
+        final int maxWaitTime = 2000; // Maximum total wait time in milliseconds
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        CountDownLatch latch = new CountDownLatch(1);
+        long startTime = System.currentTimeMillis();
+
+        scheduler.scheduleAtFixedRate(() -> {
+            if (System.currentTimeMillis() - startTime >= maxWaitTime) {
+                System.err.println("Failed to connect to server after " + maxWaitTime + " ms");
+                latch.countDown(); // Ensure the latch is decremented to unblock main thread
+                scheduler.shutdown(); // Stop retrying
+                return;
+            }
+
             try {
                 socket = new Socket("localhost", port);
-                break;
+                System.out.println("Connected to server.");
+                latch.countDown(); // Signal the main thread to continue
+                scheduler.shutdown(); // Stop retrying
             } catch (ConnectException conEx) {
-                System.out.println("Failed to connect to server. Retrying...");
-                retryCount++;
+                System.out.println("Failed to connect to server. Retrying after " + retryDelay + " ms");
+            } catch (IOException e) {
+                System.err.println("Unexpected I/O error: " + e.getMessage());
+                latch.countDown(); // Ensure the latch is decremented to unblock main thread
+                scheduler.shutdown(); // Stop retrying on unexpected errors
             }
+        }, 0, retryDelay, TimeUnit.MILLISECONDS);
+
+        latch.await(); // Wait until a connection is established or max wait time is reached
+
+        if (socket == null || !socket.isConnected()) {
+            throw new IOException("Unable to connect to the server after " + maxWaitTime + " ms");
         }
         ps = new PrintStream(socket.getOutputStream());
         br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
