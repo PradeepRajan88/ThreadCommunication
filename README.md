@@ -69,11 +69,11 @@ Use maven to build the JAR file. This will create [/target/ThreadCommunication-1
 Use 'Run_ThreadCommunication.sh' with arguments as given below, or execute the following command in the commandline from
 the project root directory.
 
-> java -cp .\target\ThreadCommunication-1.0.jar thread.ThreadCommunication 25 Hello true
+> java -cp .\target\ThreadCommunication-1.0.jar thread.ThreadCommunication 10 true Hello
 
      *   args[0] -> stopCondition (int, number of messages that each player should send as well as receive)
-     *   args[1] -> initialMessage (String, the very first message that Initiator will send)
-     *   args[2] -> verboseLogging (boolean, whether the players should log their actions to the console)
+     *   args[1] -> verboseLogging (boolean, whether the players should log their actions to the console)
+     *   args[2] -> initialMessage (String, the very first message that Initiator will send)
 	 *   If args are not supplied, defaults will be used.
 
 ## How to run ProcessCommunication
@@ -88,7 +88,7 @@ second command line instance while Server waits.**
 Use 'Run_ProcessCommunicationServer.sh' followed by 'Run_ProcessCommunicationClient.sh' with arguments as given below,
 or execute the following commands in the commandline from the project root directory.
 
-> java -cp .\target\ThreadCommunication-1.0.jar process.ProcessCommunicationServer 25 true 88 Hello
+> java -cp .\target\ThreadCommunication-1.0.jar process.ProcessCommunicationServer 10 true 88 Hello
 >
 
 	 *   args[0] -> stopCondition (int, number of messages that each player should send as well as receive)
@@ -97,7 +97,7 @@ or execute the following commands in the commandline from the project root direc
      *   args[3] -> initialMessage (String, the very first message that the Server will send)
 	 *   If args are not supplied, defaults will be used. 
 
-> java -cp .\target\ThreadCommunication-1.0.jar process.ProcessCommunicationClient 25 true 88
+> java -cp .\target\ThreadCommunication-1.0.jar process.ProcessCommunicationClient 10 true 88
 >
 
      *   args[0] -> stopCondition (int, number of messages that each player should send as well as receive)
