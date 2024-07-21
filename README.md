@@ -1,7 +1,7 @@
 # Thread communication - Introduction
 
-This application consists of two modules - Thread communication and Process communication.
-This Java application is written and compiled using JDK version 8 and tested on JDK 12. Prior versions may not be
+This Java application consists of two modules - Thread communication and Process communication.
+Written and compiled using JDK version 17 and tested on JDK 8, 17 and 22. Java versions older than 8 may not be
 supported.
 Maven is required to build the project
 
