@@ -122,7 +122,16 @@ public class WebSocketPlayer {
 
         final int retryDelay = 200; // Delay between retries in milliseconds
         final int maxWaitTime = 2000; // Maximum total wait time in milliseconds
+        initSocketWithDelayedRetry(maxWaitTime, retryDelay);
 
+        if (socket == null || !socket.isConnected()) {
+            throw new IOException("Unable to connect to the server after " + maxWaitTime + " ms");
+        }
+        ps = new PrintStream(socket.getOutputStream());
+        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    }
+
+    private void initSocketWithDelayedRetry(int maxWaitTime, int retryDelay) throws InterruptedException {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         CountDownLatch latch = new CountDownLatch(1);
         long startTime = System.currentTimeMillis();
@@ -150,12 +159,6 @@ public class WebSocketPlayer {
         }, 0, retryDelay, TimeUnit.MILLISECONDS);
 
         latch.await(); // Wait until a connection is established or max wait time is reached
-
-        if (socket == null || !socket.isConnected()) {
-            throw new IOException("Unable to connect to the server after " + maxWaitTime + " ms");
-        }
-        ps = new PrintStream(socket.getOutputStream());
-        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
     /**
